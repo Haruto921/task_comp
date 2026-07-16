@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Copy dependency definitions first for layer caching
-# (When build context is root, we need to specify environment/ path)
 COPY Cargo.toml ./
 COPY src/ ./src/
 
@@ -27,10 +26,7 @@ RUN rm -rf src
 # Copy source code from environment directory
 COPY src/ ./src/
 
-# Copy tests from repository root (build context must be set to repository root)
-COPY tests/ ./tests/
-
-# Build tests if tests directory exists
-RUN if [ -d "tests" ]; then cargo build --tests --release; fi
+# NOTE: tests/ is mounted via docker-compose volumes, not copied here
+# This prevents AI agents from seeing the test files in the workspace
 
 CMD ["/bin/bash"]
