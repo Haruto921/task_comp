@@ -1,24 +1,17 @@
 # docker-compose.yml for Terminal-Bench
-# Tests are mounted from the host (outside workspace), not copied into the image
-# This prevents AI agents from seeing test files in the workspace
+# Build context is repository root
 
 services:
   agent:
     build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      # Mount tests from parent directory (outside AI agent workspace)
-      - ../tests:/app/tests:ro
+      context: ..
+      dockerfile: environment/Dockerfile
     environment:
       - RUST_LOG=info
     working_dir: /app
 
   verifier:
     build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      # Mount tests from parent directory
-      - ../tests:/app/tests:ro
+      context: ..
+      dockerfile: environment/Dockerfile
     command: /app/tests/test.sh

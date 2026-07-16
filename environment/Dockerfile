@@ -12,8 +12,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Copy dependency definitions first for layer caching
-COPY Cargo.toml ./
-COPY src/ ./src/
+COPY environment/Cargo.toml ./
+COPY environment/src/ ./src/
 
 # Build main binary (src/ includes lib.rs)
 RUN cargo build --release
@@ -24,9 +24,12 @@ RUN cargo fetch
 RUN rm -rf src
 
 # Copy source code from environment directory
-COPY src/ ./src/
+COPY environment/src/ ./src/
 
-# NOTE: tests/ is mounted via docker-compose volumes, not copied here
-# This prevents AI agents from seeing the test files in the workspace
+# Copy tests from repository root for building
+COPY tests/ ./tests/
+
+# Build tests (required for oracle verification)
+RUN if [ -d "tests" ]; then cargo build --tests --release; fi
 
 CMD ["/bin/bash"]
