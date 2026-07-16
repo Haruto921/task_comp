@@ -12,8 +12,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Copy dependency definitions first for layer caching
-COPY environment/Cargo.toml ./
-COPY environment/src/ ./src/
+COPY Cargo.toml ./
+COPY src/ ./src/
 
 # Build main binary (src/ includes lib.rs)
 RUN cargo build --release
@@ -24,9 +24,9 @@ RUN cargo fetch
 RUN rm -rf src
 
 # Copy source code from environment directory
-COPY environment/src/ ./src/
+COPY src/ ./src/
 
-# Copy tests from repository root for building
+# Copy tests from environment/tests for building
 COPY tests/ ./tests/
 
 # Build tests (required for oracle verification)

@@ -1,17 +1,17 @@
 # docker-compose.yml for Terminal-Bench
-# Build context is repository root
+# Build context is environment/ directory
 
 services:
   agent:
     build:
-      context: ..
-      dockerfile: environment/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     environment:
       - RUST_LOG=info
     working_dir: /app
 
   verifier:
     build:
-      context: ..
-      dockerfile: environment/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     command: /app/tests/test.sh
