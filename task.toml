@@ -1,0 +1,27 @@
+version = "2.0"
+
+[metadata]
+author_name = "Terminal-Bench Architect"
+author_email = "architect@terminal-bench.org"
+difficulty = "unknown"
+category = "db_interaction"
+subcategories = []
+number_of_milestones = 0
+codebase_size = "small"
+languages = ["rust"]
+tags = ["async", "tokio", "consistency", "debugging", "concurrency"]
+expert_time_estimate_min = 45
+junior_time_estimate_min = 180
+
+[verifier]
+timeout_sec = 120
+
+[agent]
+timeout_sec = 600
+
+[environment]
+build_timeout_sec = 300
+cpus = 2
+memory_mb = 2048
+storage_mb = 512
+allow_internet = false

@@ -1,0 +1,8 @@
+target/
+.git/
+*.md
+!instruction.md
+solution/
+submission/
+.dockerignore
+Dockerfile
